@@ -34,6 +34,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import java.lang.reflect.Field;
@@ -63,10 +66,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     private CharSequence mOldQueryText;
     private CharSequence mUserQuery;
 
-    private OnQueryTextListener mOnQueryChangeListener;
-    private SearchViewListener mSearchViewListener;
+    @Nullable private OnQueryTextListener mOnQueryChangeListener;
+    @Nullable private SearchViewListener mSearchViewListener;
 
-    private ListAdapter mAdapter;
+    @Nullable private ListAdapter mAdapter;
 
     private SavedState mSavedState;
     private boolean submit = false;
@@ -78,15 +81,15 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     private Context mContext;
 
-    public MaterialSearchView(Context context) {
+    public MaterialSearchView(@NonNull Context context) {
         this(context, null);
     }
 
-    public MaterialSearchView(Context context, AttributeSet attrs) {
+    public MaterialSearchView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MaterialSearchView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaterialSearchView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs);
 
         mContext = context;
@@ -282,12 +285,12 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         return activities.size() == 0;
     }
 
-    public void hideKeyboard(View view) {
+    public void hideKeyboard(@NonNull View view) {
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void showKeyboard(View view) {
+    public void showKeyboard(@NonNull View view) {
         view.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, 0);
@@ -296,7 +299,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     //Public Attributes
 
     @Override
-    public void setBackground(Drawable background) {
+    public void setBackground(@Nullable Drawable background) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSearchTopBar.setBackground(background);
         } else {
@@ -317,23 +320,23 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         mSearchSrcTextView.setHintTextColor(color);
     }
 
-    public void setHint(CharSequence hint) {
+    public void setHint(@Nullable CharSequence hint) {
         mSearchSrcTextView.setHint(hint);
     }
 
-    public void setVoiceIcon(Drawable drawable) {
+    public void setVoiceIcon(@Nullable Drawable drawable) {
         mVoiceBtn.setImageDrawable(drawable);
     }
 
-    public void setCloseIcon(Drawable drawable) {
+    public void setCloseIcon(@Nullable Drawable drawable) {
         mEmptyBtn.setImageDrawable(drawable);
     }
 
-    public void setBackIcon(Drawable drawable) {
+    public void setBackIcon(@Nullable Drawable drawable) {
         mBackBtn.setImageDrawable(drawable);
     }
 
-    public void setSuggestionIcon(Drawable drawable) {
+    public void setSuggestionIcon(@Nullable Drawable drawable) {
         suggestionIcon = drawable;
     }
 
@@ -341,7 +344,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         mSearchSrcTextView.setInputType(inputType);
     }
 
-    public void setSuggestionBackground(Drawable background) {
+    public void setSuggestionBackground(@Nullable Drawable background) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSuggestionsListView.setBackground(background);
         } else {
@@ -389,7 +392,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param listener
      */
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+    public void setOnItemClickListener(@Nullable AdapterView.OnItemClickListener listener) {
         mSuggestionsListView.setOnItemClickListener(listener);
     }
 
@@ -398,7 +401,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param adapter
      */
-    public void setAdapter(ListAdapter adapter) {
+    public void setAdapter(@Nullable ListAdapter adapter) {
         mAdapter = adapter;
         mSuggestionsListView.setAdapter(adapter);
         startFilter(mSearchSrcTextView.getText());
@@ -409,7 +412,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param suggestions array of suggestions
      */
-    public void setSuggestions(String[] suggestions) {
+    public void setSuggestions(@Nullable String[] suggestions) {
         if (suggestions != null && suggestions.length > 0) {
             mTintView.setVisibility(VISIBLE);
             final SearchAdapter adapter = new SearchAdapter(mContext, suggestions, suggestionIcon, ellipsize);
@@ -442,7 +445,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      * @param query
      * @param submit
      */
-    public void setQuery(CharSequence query, boolean submit) {
+    public void setQuery(@Nullable CharSequence query, boolean submit) {
         mSearchSrcTextView.setText(query);
         if (query != null) {
             mSearchSrcTextView.setSelection(mSearchSrcTextView.length());
@@ -471,7 +474,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param menuItem
      */
-    public void setMenuItem(MenuItem menuItem) {
+    public void setMenuItem(@NonNull MenuItem menuItem) {
         this.mMenuItem = menuItem;
         mMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -588,7 +591,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param listener
      */
-    public void setOnQueryTextListener(OnQueryTextListener listener) {
+    public void setOnQueryTextListener(@Nullable OnQueryTextListener listener) {
         mOnQueryChangeListener = listener;
     }
 
@@ -597,7 +600,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param listener
      */
-    public void setOnSearchViewListener(SearchViewListener listener) {
+    public void setOnSearchViewListener(@Nullable SearchViewListener listener) {
         mSearchViewListener = listener;
     }
 
@@ -638,6 +641,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
 
     @Override
+    @NonNull
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
 
@@ -712,7 +716,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
          * @return true if the query has been handled by the listener, false to let the
          * SearchView perform the default action.
          */
-        boolean onQueryTextSubmit(String query);
+        boolean onQueryTextSubmit(@NonNull String query);
 
         /**
          * Called when the query text is changed by the user.
@@ -721,7 +725,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
          * @return false if the SearchView should perform the default action of showing any
          * suggestions if available, true if the action was handled by the listener.
          */
-        boolean onQueryTextChange(String newText);
+        boolean onQueryTextChange(@NonNull String newText);
     }
 
     public interface SearchViewListener {

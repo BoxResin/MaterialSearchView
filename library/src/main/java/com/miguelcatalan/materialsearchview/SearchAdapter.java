@@ -12,6 +12,9 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +25,19 @@ import java.util.List;
  */
 public class SearchAdapter extends BaseAdapter implements Filterable {
 
-    private ArrayList<String> data;
-    private String[] suggestions;
-    private Drawable suggestionIcon;
-    private LayoutInflater inflater;
+    @NonNull private ArrayList<String> data;
+    @NonNull private String[] suggestions;
+    @Nullable private Drawable suggestionIcon;
+    @NonNull private LayoutInflater inflater;
     private boolean ellipsize;
 
-    public SearchAdapter(Context context, String[] suggestions) {
+    public SearchAdapter(@NonNull Context context, @NonNull String[] suggestions) {
         inflater = LayoutInflater.from(context);
         data = new ArrayList<>();
         this.suggestions = suggestions;
     }
 
-    public SearchAdapter(Context context, String[] suggestions, Drawable suggestionIcon, boolean ellipsize) {
+    public SearchAdapter(@NonNull Context context, @NonNull String[] suggestions, @Nullable Drawable suggestionIcon, boolean ellipsize) {
         inflater = LayoutInflater.from(context);
         data = new ArrayList<>();
         this.suggestions = suggestions;
@@ -43,6 +46,7 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
+    @NonNull
     public Filter getFilter() {
         Filter filter = new Filter() {
             @Override
@@ -82,6 +86,7 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return data.size();
     }
 
+    @NonNull
     @Override
     public Object getItem(int position) {
         return data.get(position);
@@ -92,6 +97,7 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return position;
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
