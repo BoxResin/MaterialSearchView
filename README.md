@@ -246,6 +246,7 @@ The code is based in the Krishnakapil original concept.
 
 # License
 	Copyright 2015 Miguel Catalan Bañuls
+	Copyright 2019 Minsuk Eom
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
