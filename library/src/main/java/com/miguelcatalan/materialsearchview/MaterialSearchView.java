@@ -148,12 +148,12 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
         mSearchLayout = findViewById(R.id.search_layout);
 
-        mSearchTopBar = (RelativeLayout) mSearchLayout.findViewById(R.id.search_top_bar);
-        mSuggestionsListView = (ListView) mSearchLayout.findViewById(R.id.suggestion_list);
-        mSearchSrcTextView = (EditText) mSearchLayout.findViewById(R.id.searchTextView);
-        mBackBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_up_btn);
-        mVoiceBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_voice_btn);
-        mEmptyBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_empty_btn);
+        mSearchTopBar = mSearchLayout.findViewById(R.id.search_top_bar);
+        mSuggestionsListView = mSearchLayout.findViewById(R.id.suggestion_list);
+        mSearchSrcTextView = mSearchLayout.findViewById(R.id.searchTextView);
+        mBackBtn = mSearchLayout.findViewById(R.id.action_up_btn);
+        mVoiceBtn = mSearchLayout.findViewById(R.id.action_voice_btn);
+        mEmptyBtn = mSearchLayout.findViewById(R.id.action_empty_btn);
         mTintView = mSearchLayout.findViewById(R.id.transparent_view);
 
         mSearchSrcTextView.setOnClickListener(mOnClickListener);
@@ -212,7 +212,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
 
     private void startFilter(CharSequence s) {
-        if (mAdapter != null && mAdapter instanceof Filterable) {
+        if (mAdapter instanceof Filterable) {
             ((Filterable) mAdapter).getFilter().filter(s, MaterialSearchView.this);
         }
     }
@@ -288,9 +288,6 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
 
     public void showKeyboard(View view) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1 && view.hasFocus()) {
-            view.clearFocus();
-        }
         view.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, 0);
