@@ -34,10 +34,10 @@ dependencies {
 }
 
 publish {
-    userOrg = 'miguelcatalan'
-    groupId = 'com.miguelcatalan'
+    userOrg = 'boxresin'
+    groupId = 'boxresin.android'
     artifactId = 'materialsearchview'
     publishVersion = '1.4.0'
     desc = 'Cute library to implement SearchView in a Material Design Approach'
-    website = 'https://github.com/MiguelCatalan/MaterialSearchView'
+    website = 'https://github.com/BoxResin/MaterialSearchView'
 }
